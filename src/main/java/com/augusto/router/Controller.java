@@ -7,7 +7,6 @@ import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.http.MediaType.TEXT_PLAIN;
 import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
@@ -17,6 +16,8 @@ public class Controller {
     @Bean
     public RouterFunction<ServerResponse> hello(HelloHandler helloHandler) {
         return route()
-                .GET("/hello", accept(TEXT_PLAIN), helloHandler::hello).build();
+                .GET("/hello", accept(APPLICATION_JSON), helloHandler::hello)
+                .GET("/hello/{name}", accept(APPLICATION_JSON), helloHandler::helloWithName)
+                .build();
     }
 }
